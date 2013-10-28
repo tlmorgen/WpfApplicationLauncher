@@ -1,0 +1,396 @@
+﻿<Window x:Class="WpfApplicationLauncher.GUI.ConfigurationDialog"        
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Topmost="True"
+        Visibility="Visible"
+        ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen"
+        ShowActivated="True"
+        Background="Transparent"
+        Width="890"
+        Height="289">
+    <Window.Resources>
+        <DataTemplate x:Key="fontFamilyData">
+            <TextBlock Text="{Binding Path=Source}"
+                       FontFamily="{Binding Path=Source}"
+                       Height="20px" />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type FamilyTypeface}">
+            <WrapPanel>
+                <TextBlock Text="{Binding Path=Style}"
+                           FontFamily="{Binding Path=Source}"
+                           FontStyle="{Binding Path=Style}" />
+                <TextBlock Text=" "/>
+                <TextBlock Text="{Binding Path=Weight}"
+                           FontFamily="{Binding Path=Source}"
+                           FontWeight="{Binding Path=Weight}" />
+                <TextBlock Text=" "/>
+                <TextBlock Text="{Binding Path=Stretch}"
+                           FontFamily="{Binding Path=Source}"
+                           FontStretch="{Binding Path=Stretch}" />
+            </WrapPanel>
+        </DataTemplate>
+        <CollectionViewSource Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}" x:Key="familyCollection"/>
+    </Window.Resources>
+    <Border BorderThickness="6">
+        <Border.BorderBrush>
+            <SolidColorBrush Color="#1a3c48"
+                             Opacity="0.7" />
+        </Border.BorderBrush>
+        <Border.Background>
+            <SolidColorBrush Color="#215f85"
+                             Opacity="0.95" />
+        </Border.Background>
+        <Grid Name="MainGrid"
+              Margin="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="0" />
+                <ColumnDefinition Width="0" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="0" />
+                <ColumnDefinition Width="0" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <Grid Name="SettingsListGrid"
+                  Grid.Row="0"
+                  Grid.Column="0"
+                  Margin="0,0,3,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0"
+                        HorizontalAlignment="Stretch"
+                        BorderBrush="Black"
+                        BorderThickness="0,0,0,1"
+                        CornerRadius="1">
+                    <Label Content="Settings"
+                               Foreground="White"
+                               HorizontalAlignment="Center" />
+                </Border>
+                <ListBox Name="lstSettings"
+                         Grid.Row="1"
+                         Margin="6"
+                         SelectionMode="Single">
+                    <ListBoxItem Content="Hot Keys"
+                                 Tag="1" />
+                    <ListBoxItem Content="Search Paths"
+                                 Tag="2" />
+                    <ListBoxItem Content="Search File Extensions"
+                                 Tag="3" />
+                    <ListBoxItem Content="Advanced File Actions"
+                                 Tag="4" />
+                </ListBox>
+            </Grid>
+            <Grid Name="HotkeySettingsGrid"
+                  Grid.Row="0"
+                  Grid.Column="1"
+                  Margin="3,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="35" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Border Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        HorizontalAlignment="Stretch"
+                        BorderBrush="Black"
+                        BorderThickness="0,0,0,1"
+                        CornerRadius="1">
+                    <Label Content="Hot Keys"
+                           Foreground="White"
+                           HorizontalAlignment="Center" />
+                </Border>
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Content="New Search Window"
+                       VerticalAlignment="Center"
+                       Foreground="White" />
+                <TextBox Grid.Row="1"
+                         Grid.Column="1"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Center"
+                         Name="txtNewSearchHK" />
+                <Label Grid.Row="2"
+                       Grid.Column="0"
+                       Content="Last Search Window"
+                       VerticalAlignment="Center"
+                       Foreground="White" />
+                <TextBox Grid.Row="2"
+                         Grid.Column="1"
+                         HorizontalAlignment="Stretch"
+                         VerticalAlignment="Center"
+                         Name="txtLastSearchHK" />
+            </Grid>
+            <Grid Name="PathSettingsGrid"
+                  Grid.Row="0"
+                  Grid.Column="2"
+                  Margin="3,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="35" />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0"
+                        HorizontalAlignment="Stretch"
+                        BorderBrush="Black"
+                        BorderThickness="0,0,0,1"
+                        CornerRadius="1">
+                    <Label Content="Search Paths"
+                           Foreground="White"
+                           HorizontalAlignment="Center" />
+                </Border>
+                <ListBox Name="lstPaths"
+                         Grid.Row="1"
+                         Margin="6" />
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Grid.Row="2"
+                            Margin="6">
+                    <Button Name="btnAddPath"
+                            Content="Add" Margin="0,0,4,0" />
+                    <Button Name="btnDelPath"
+                            Content="Delete" />
+                </StackPanel>
+            </Grid>
+            <Grid Name="ExtensionsSettingsGrid"                  
+                  Grid.Row="0"
+                  Grid.Column="3"  
+                  Margin="3,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="35" />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0"
+                        HorizontalAlignment="Stretch"
+                        BorderBrush="Black"
+                        BorderThickness="0,0,0,1"
+                        CornerRadius="1">
+                    <Label Content="File Extensions"
+                           Foreground="White"
+                           HorizontalAlignment="Center" />
+                </Border>
+                <ListBox Name="lstExtensions"
+                         Grid.Row="1"
+                         Margin="6  " />
+                <StackPanel Grid.Row="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right"                   
+                            Margin="6">
+                    <TextBox Name="txtNewExt"
+                             Width="50" Margin="0,0,4,0" />
+                    <Button Name="btnAddExt"
+                            Content="Add" Margin="0,0,4,0" />
+                    <Button Name="btnDelExt"
+                            Content="Delete" />
+                </StackPanel>
+            </Grid>
+            <Grid Name="FileActionSettingsGrid"
+                  Grid.Column="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid Name="ActionDataGrid"
+                      Grid.Row="0"
+                      Grid.Column="0"
+                      Margin="0,0,3,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="35" />
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" HorizontalAlignment="Stretch"
+                            BorderBrush="Black"
+                            BorderThickness="0,0,0,1"
+                            CornerRadius="1">
+                        <Label Content="Available Data"
+                               Foreground="White"
+                               HorizontalAlignment="Center" />
+                    </Border>
+                    <StackPanel Grid.Row="1"
+                                Margin="6">
+                        <Label Name="lblFilePath"
+                               Content="File (Full Path)"
+                                   Foreground="White" />
+                        <Label Name="lblFileDirPath"
+                               Content="File's Directory (Full Path)"
+                               Foreground="White" />
+                    </StackPanel>
+                </Grid>
+                <Grid Name="ActionDefinitionsGrid"
+                      Grid.Row="0"
+                      Grid.Column="1"
+                      Margin="0,0,3,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="35" />
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0"
+                            HorizontalAlignment="Stretch"
+                            BorderBrush="Black"
+                            BorderThickness="0,0,0,1"
+                            CornerRadius="1">
+                        <Label Content="Action Definition"
+                               HorizontalAlignment="Center"
+                               Foreground="White" />
+                    </Border>
+                    <StackPanel Grid.Row="1"
+                                Margin="6">
+                        <Border>
+                            <StackPanel>
+                                <Label Content="File Action Name"
+                                   Foreground="White" />
+                                <TextBox Name="txtFileActionName" />                
+                            </StackPanel>
+                        </Border>
+                        <Border>
+                            <StackPanel>
+                                <Label Content="File Action Executable Expression"
+                                   Foreground="White" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="45" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Name="txtFileExeFormat"
+                                             Grid.Column="0"
+                                             AllowDrop="True" />
+                                    <Button Name="btnBrowseExe"
+                                            Content="Browse"
+                                            Grid.Column="1"
+                                            Margin="3,0,0,0"/>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                        <Border>
+                            <StackPanel>
+                                <Label Content="File Action Arguments Expression"
+                                   Foreground="White" />
+                                <TextBox Name="txtFileArgFormat"
+                                         AllowDrop="True" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" 
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Margin="6" >
+                        <Button Name="btnNewFileAction"
+                                Content="New"
+                                Padding="3"
+                                Margin="0,0,3,0" />
+                        <Button Name="btnSaveFileAction"
+                                Content="Save"
+                                Padding="3" />
+                    </StackPanel>
+                </Grid>
+                <Grid Name="FileActionsListGrid"
+                      Grid.Row="0"
+                      Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="35" />
+                    </Grid.RowDefinitions>
+                    <Border HorizontalAlignment="Stretch"
+                            BorderBrush="Black"
+                            BorderThickness="0,0,0,1"
+                            CornerRadius="1">
+                        <Label Content="File Actions"
+                               Foreground="White"
+                               HorizontalAlignment="Center" />
+                    </Border>
+                    <ListBox Name="lstFileActions"
+                             Grid.Row="1"
+                             Margin="6"/>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                Grid.Row="2"
+                                Margin="6" >
+                        <Button Name="btnDeleteFileAction"
+                            Content="Delete"
+                            Padding="3" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+            <Grid Name="FontSettingsGrid"
+                  Grid.Row="0"
+                  Grid.Column="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid Name="FontPreviewGrid">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="35" />
+                    </Grid.RowDefinitions>
+                    <Border HorizontalAlignment="Stretch"
+                            BorderBrush="Black"
+                            BorderThickness="0,0,0,1"
+                            CornerRadius="1">
+                        <Label Content="Preview"
+                               Foreground="White"
+                               HorizontalAlignment="Center" />
+                    </Border>
+                    <TextBox Name="txtFontPreview"
+                            Grid.Row="1"
+                            Margin="6"
+                            FontSize="{Binding ElementName=fontSizeSlider, Path=Value}" 
+                            AcceptsReturn="true" 
+                            FontFamily="{Binding Source={StaticResource familyCollection},Path=Source}" 
+                            FontWeight="{Binding ElementName=lstFontFamilyTypeface,Path=SelectedItem.Weight}" 
+                            FontStretch="{Binding ElementName=lstFontFamilyTypeface,Path=SelectedItem.Stretch}" 
+                            FontStyle="{Binding ElementName=lstFontFamilyTypeface,Path=SelectedItem.Style}" 
+                            TextAlignment="Center"
+                            TextWrapping="Wrap">
+                        The quick brown fox jumps over the lazy dog
+                    </TextBox>
+                    <WrapPanel Grid.Row="2"
+                               Margin="6"
+                               HorizontalAlignment="Right"
+                               VerticalAlignment="Center">
+                        <Button Name="btnFontChoose"
+                                Content="Choose Font" />
+                    </WrapPanel>
+                </Grid>
+            </Grid>
+            <StackPanel Name="pnlButtons"
+                        Grid.Column="0" 
+                        Grid.ColumnSpan="6"
+                        Grid.Row="1" 
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        Margin="0,4,0,0"
+                        Orientation="Horizontal" 
+                        FlowDirection="RightToLeft"
+                        Background="#1a3c48">
+                <Button Name="btnCancel"
+                        Content="Cancel" 
+                        Margin="6" />
+                <Button Name="btnSave" 
+                        Content="Save"
+                        Margin="0,6,6,6 " />
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>

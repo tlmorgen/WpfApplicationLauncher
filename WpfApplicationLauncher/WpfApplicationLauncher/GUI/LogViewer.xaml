@@ -1,0 +1,28 @@
+﻿<Window x:Class="WpfApplicationLauncher.GUI.LogViewer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="LogViewer"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        Topmost="True"
+        Visibility="Visible"
+        ShowInTaskbar="True"
+        WindowStartupLocation="CenterScreen"
+        ShowActivated="True"
+        Background="Transparent"
+        Width="450"
+        Height="550">
+    <Border BorderThickness="6">
+        <Border.BorderBrush>
+            <SolidColorBrush Color="#1a3c48"
+                             Opacity="0.7" />
+        </Border.BorderBrush>
+        <Border.Background>
+            <SolidColorBrush Color="#215f85"
+                             Opacity="0.95" />
+        </Border.Background>
+        <DataGrid AutoGenerateColumns="True" 
+                  Name="gridMain" 
+                  Margin="10" />
+    </Border>
+</Window>
