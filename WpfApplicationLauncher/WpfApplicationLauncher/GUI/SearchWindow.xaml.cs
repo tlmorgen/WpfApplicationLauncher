@@ -67,10 +67,11 @@ namespace WpfApplicationLauncher.GUI
         {
             if (CopyFrom != null)
             {
-                this.SearchTextBox.Text = CopyFrom.SearchText;
-                this.ResultsListBox.ItemsSource = CopyFrom.ItemSource;
                 this.ResultsListBox.Dispatcher.BeginInvoke(new Action(delegate()
                 {
+                    this.SearchTextBox.Text = CopyFrom.SearchText;
+                    this.SearchTextBox.Select(this.SearchTextBox.Text.Length, 0);
+                    this.ResultsListBox.ItemsSource = CopyFrom.ItemSource;
                     this.ResultsListBox.SelectedIndex = CopyFrom.SelectedIndex;
                 }), DispatcherPriority.Loaded);
             }
